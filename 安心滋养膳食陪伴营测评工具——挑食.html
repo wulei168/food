@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>安心滋养膳食陪伴营 · 挑食类型小测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #fef9e8;  /* 温暖米色背景 */
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Noto Sans', 'Helvetica Neue', sans-serif;
+            color: #2e3b2c;
+            padding: 20px 16px 48px;
+            line-height: 1.45;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            background: #ffffffdd;
+            backdrop-filter: blur(2px);
+            border-radius: 48px 32px 48px 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 24px 20px 36px;
+            transition: all 0.2s ease;
+        }
+
+        /* 头部装饰 */
+        .hero {
+            text-align: center;
+            margin-bottom: 28px;
+            border-bottom: 2px dashed #e9d6b0;
+            padding-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #3c6b3a;
+            letter-spacing: -0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hero h1 span {
+            background: #f5e2b0;
+            padding: 4px 12px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+        }
+
+        .hero .sub {
+            color: #6c7a5a;
+            margin-top: 12px;
+            font-size: 1rem;
+            background: #faf3e0;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        .badge {
+            background: #e7f0e3;
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 12px;
+            color: #3c6b3a;
+        }
+
+        /* 用户信息栏 */
+        .info-card {
+            background: #fef7e9;
+            border-radius: 28px;
+            padding: 18px 20px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            justify-content: space-between;
+            border: 1px solid #f3e5ca;
+        }
+
+        .info-field {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .info-field label {
+            font-weight: 600;
+            color: #4a6741;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+
+        .info-field input, .info-field select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 40px;
+            border: 1px solid #e2d5b6;
+            background: white;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .info-field input:focus, .info-field select:focus {
+            border-color: #9bbb7b;
+            box-shadow: 0 0 0 3px rgba(115, 168, 87, 0.2);
+        }
+
+        /* 问题区块 */
+        .questions-area {
+            margin: 12px 0 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.03), 0 0 0 1px #f1e9d8;
+            transition: all 0.2s;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: #2a4b2a;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .q-num {
+            background: #dce8d4;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #2f5a2c;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-left: 6px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 40px;
+            transition: background 0.1s;
+        }
+
+        .option-item:hover {
+            background: #faf4e8;
+        }
+
+        .option-item input[type="radio"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #bfd3aa;
+            border-radius: 50%;
+            margin-top: 2px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+            background: white;
+        }
+
+        .option-item input[type="radio"]:checked {
+            border-color: #6f9e4f;
+            background-color: #6f9e4f;
+            box-shadow: inset 0 0 0 4px white;
+        }
+
+        .option-item label {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #2d3a2a;
+            font-weight: 500;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* 错误提示 */
+        .error-msg {
+            background: #ffe7db;
+            border-left: 5px solid #e6a17a;
+            padding: 12px 18px;
+            border-radius: 28px;
+            margin: 12px 0 20px;
+            font-size: 0.9rem;
+            color: #b45a2e;
+            display: none;
+        }
+
+        /* 按钮组 */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #f2e5d0;
+            color: #4c6742;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary {
+            background: #7caf5e;
+            color: white;
+            box-shadow: 0 6px 0 #4b6e34;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #4b6e34;
+        }
+
+        .btn-secondary {
+            background: #e7dbbc;
+            border: 1px solid #d6c8a4;
+        }
+
+        .btn-secondary:active {
+            background: #dbceab;
+        }
+
+        /* 结果区域 */
+        .result-card {
+            margin-top: 30px;
+            background: linear-gradient(145deg, #f6fbeef0 0%, #fff8ed 100%);
+            border-radius: 44px;
+            padding: 20px 24px;
+            border: 1px solid #e0d5b9;
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #3a6b35;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .result-type {
+            background: #ddeece;
+            border-radius: 80px;
+            padding: 6px 18px;
+            font-size: 1.2rem;
+            display: inline-block;
+        }
+
+        .result-score {
+            font-size: 0.9rem;
+            color: #6a715a;
+            margin: 8px 0 12px;
+            border-left: 3px solid #c7dcb1;
+            padding-left: 12px;
+        }
+
+        .result-desc {
+            margin: 18px 0 14px;
+            line-height: 1.55;
+            font-size: 1rem;
+        }
+
+        .tips-list {
+            background: #ffffffc9;
+            border-radius: 28px;
+            padding: 16px 20px;
+            margin: 16px 0 8px;
+            list-style-type: none;
+        }
+
+        .tips-list li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            font-size: 0.94rem;
+        }
+
+        .tips-list li::before {
+            content: "🌱";
+            position: absolute;
+            left: 0;
+            top: -1px;
+            font-size: 1rem;
+        }
+
+        .reset-result {
+            margin-top: 16px;
+            text-align: right;
+        }
+
+        .small-note {
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 20px;
+            color: #9b8e6e;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.7rem;
+            color: #b9ae88;
+        }
+
+        @media (max-width: 550px) {
+            .container {
+                padding: 20px 16px;
+            }
+            .question-text {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 10px 20px;
+            }
+            .result-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🍽️ 安心滋养膳食陪伴营 <span>挑食小雷达</span></h1>
+        <div class="sub">🌈 3分钟读懂孩子的挑食类型，获取专属滋养方案</div>
+        <div class="badge">📋 基于儿童喂养行为评估 · 温和指引</div>
+    </div>
+
+    <!-- 孩子基本信息 (个性化展示) -->
+    <div class="info-card">
+        <div class="info-field">
+            <label>👧 孩子昵称 (选填)</label>
+            <input type="text" id="childName" placeholder="如：小豌豆、乐乐" maxlength="20">
+        </div>
+        <div class="info-field">
+            <label>📅 年龄阶段</label>
+            <select id="childAgeGroup">
+                <option value="baby">6-12个月</option>
+                <option value="toddler" selected>1-3岁</option>
+                <option value="preschool">4-6岁</option>
+                <option value="school">7岁以上</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 问卷区域 8道题 -->
+    <div class="questions-area" id="questionsArea">
+        <!-- 动态生成题目以保证结构统一，但为了方便维护直接硬编码8题，便于阅读 -->
+        <!-- 问题1 -->
+        <div class="question-card" data-qid="1">
+            <div class="question-text"><span class="q-num">1</span> 孩子尝试从未吃过的食物的意愿？</div>
+            <div class="options" data-qname="q1">
+                <label class="option-item"><input type="radio" name="q1" value="1"> <label>😋 很愿意尝试，充满好奇</label></label>
+                <label class="option-item"><input type="radio" name="q1" value="2"> <label>🤔 有些犹豫，但最终会尝试</label></label>
+                <label class="option-item"><input type="radio" name="q1" value="3"> <label>😣 多数情况拒绝尝试</label></label>
+                <label class="option-item"><input type="radio" name="q1" value="4"> <label>🚫 非常抗拒，完全不尝试新食物</label></label>
+            </div>
+        </div>
+        <!-- 问题2 蔬菜接受度 -->
+        <div class="question-card" data-qid="2">
+            <div class="question-text"><span class="q-num">2</span> 孩子对蔬菜的接受情况？</div>
+            <div class="options"><label class="option-item"><input type="radio" name="q2" value="1"> <label>🥦 爱吃多种蔬菜，不排斥</label></label>
+            <label class="option-item"><input type="radio" name="q2" value="2"> <label>🥕 只吃几种喜欢的蔬菜</label></label>
+            <label class="option-item"><input type="radio" name="q2" value="3"> <label>🥬 拒绝大部分蔬菜</label></label>
+            <label class="option-item"><input type="radio" name="q2" value="4"> <label>🍂 几乎不吃任何蔬菜</label></label></div>
+        </div>
+        <!-- 问题3 质地敏感 -->
+        <div class="question-card" data-qid="3">
+            <div class="question-text"><span class="q-num">3</span> 是否对食物质地 (软烂、脆、颗粒感等) 表现出明显的偏好或厌恶？</div>
+            <div class="options"><label class="option-item"><input type="radio" name="q3" value="1"> <label>✨ 不在意质地，什么都能接受</label></label>
+            <label class="option-item"><input type="radio" name="q3" value="2"> <label>🧂 稍微挑剔但能接受多种质地</label></label>
+            <label class="option-item"><input type="radio" name="q3" value="3"> <label>😖 对某些质地强烈拒绝，影响进食</label></label>
+            <label class="option-item"><input type="radio" name="q3" value="4"> <label>⚠️ 极度敏感，严重限制食物选择</label></label></div>
+        </div>
+        <!-- 问题4 食物固化 -->
+        <div class="question-card" data-qid="4">
+            <div class="question-text"><span class="q-num">4</span> 孩子是否只愿意吃固定的几样食物，拒绝变化？</div>
+            <div class="options"><label class="option-item"><input type="radio" name="q4" value="1"> <label>🎉 愿意尝试不同食物组合</label></label>
+            <label class="option-item"><input type="radio" name="q4" value="2"> <label>😌 有些偏好但可以接受变化</label></label>
+            <label class="option-item"><input type="radio" name="q4" value="3"> <label>🔒 必须吃固定几样，否则拒绝</label></label>
+            <label class="option-item"><input type="radio" name="q4" value="4"> <label>❗ 极度固执，只吃<5种食物</label></label></div>
+        </div>
+        <!-- 问题5 进餐情绪 -->
+        <div class="question-card" data-qid="5">
+            <div class="question-text"><span class="q-num">5</span> 进餐时孩子经常发脾气或拒绝进食吗？</div>
+            <div class="options"><label class="option-item"><input type="radio" name="q5" value="1"> <label>😊 从不，进餐氛围愉快</label></label>
+            <label class="option-item"><input type="radio" name="q5" value="2"> <label>😐 偶尔闹情绪</label></label>
+            <label class="option-item"><input type="radio" name="q5" value="3"> <label>😤 经常发脾气或抵抗</label></label>
+            <label class="option-item"><input type="radio" name="q5" value="4"> <label>💢 每次进餐都对抗，非常困难</label></label></div>
+        </div>
+        <!-- 问题6 蛋白质接受度 -->
+        <div class="question-card" data-qid="6">
+            <div class="question-text"><span class="q-num">6</span> 对肉、蛋、豆制品等蛋白质食物的接受程度？</div>
+            <div class="options"><label class="option-item"><input type="radio" name="q6" value="1"> <label>🍗 接受多种，爱吃肉蛋豆</label></label>
+            <label class="option-item"><input type="radio" name="q6" value="2"> <label>🍳 接受部分种类，选择性吃</label></label>
+            <label class="option-item"><input type="radio" name="q6" value="3"> <label>🥚 接受极少种类，容易拒绝</label></label>
+            <label class="option-item"><input type="radio" name="q6" value="4"> <label>🚷 完全拒绝蛋白质类食物</label></label></div>
+        </div>
+        <!-- 问题7 颜色外观拒绝 -->
+        <div class="question-card" data-qid="7">
+            <div class="question-text"><span class="q-num">7</span> 会因为食物的颜色、形状或外观而拒绝吃吗？</div>
+            <div class="options"><label class="option-item"><input type="radio" name="q7" value="1"> <label>🌈 从不</label></label>
+            <label class="option-item"><input type="radio" name="q7" value="2"> <label>🌿 很少</label></label>
+            <label class="option-item"><input type="radio" name="q7" value="3"> <label>🍕 有时</label></label>
+            <label class="option-item"><input type="radio" name="q7" value="4"> <label>🎨 经常，外观决定是否进食</label></label></div>
+        </div>
+        <!-- 问题8 整体影响 -->
+        <div class="question-card" data-qid="8">
+            <div class="question-text"><span class="q-num">8</span> 您认为孩子整体挑食行为对家庭进餐的影响程度？</div>
+            <div class="options"><label class="option-item"><input type="radio" name="q8" value="1"> <label>✅ 毫无影响</label></label>
+            <label class="option-item"><input type="radio" name="q8" value="2"> <label>🌻 轻微影响</label></label>
+            <label class="option-item"><input type="radio" name="q8" value="3"> <label>🍂 中等影响，需要费心</label></label>
+            <label class="option-item"><input type="radio" name="q8" value="4"> <label>⚠️ 严重影响，非常困扰</label></label></div>
+        </div>
+    </div>
+
+    <div class="error-msg" id="errorMsg">⚠️ 请完整回答所有问题，再查看结果~</div>
+
+    <div class="action-buttons">
+        <button class="btn btn-primary" id="submitBtn">✨ 生成专属类型报告</button>
+        <button class="btn btn-secondary" id="resetBtn">🔄 重置所有选项</button>
+    </div>
+
+    <!-- 结果展示区 -->
+    <div id="resultContainer" class="result-card">
+        <div class="result-title">
+            🌟 滋养解析报告
+            <span class="result-type" id="resultTypeLabel"></span>
+        </div>
+        <div class="result-score" id="resultScore"></div>
+        <div class="result-desc" id="resultDescription"></div>
+        <div class="tips-list" id="resultTips">
+            <!-- 动态建议列表 -->
+        </div>
+        <div class="reset-result">
+            <button class="btn btn-secondary" id="reTestBtn" style="padding: 6px 18px; font-size:0.85rem;">📋 重新测试</button>
+        </div>
+    </div>
+    <div class="small-note">💡 本测试基于日常喂养行为评估，帮助家长了解孩子挑食类型，提供温和养育参考。</div>
+    <footer>安心滋养膳食陪伴营 · 爱与美味不挑食</footer>
+</div>
+
+<script>
+    (function(){
+        // 获取所有radio组
+        const questionNames = ['q1','q2','q3','q4','q5','q6','q7','q8'];
+        
+        // DOM 元素
+        const submitBtn = document.getElementById('submitBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const reTestBtn = document.getElementById('reTestBtn');
+        const resultDiv = document.getElementById('resultContainer');
+        const errorMsgDiv = document.getElementById('errorMsg');
+        const childNameInput = document.getElementById('childName');
+        const childAgeSelect = document.getElementById('childAgeGroup');
+
+        // 辅助函数：检查所有题目是否已回答
+        function isAllQuestionsAnswered() {
+            for(let name of questionNames) {
+                let radios = document.querySelectorAll(`input[name="${name}"]`);
+                let checked = Array.from(radios).some(radio => radio.checked);
+                if(!checked) return false;
+            }
+            return true;
+        }
+
+        // 获取总分以及每个维度分数（用于扩展建议）
+        function getScores() {
+            let total = 0;
+            let qScores = {};
+            for(let name of questionNames) {
+                let selected = document.querySelector(`input[name="${name}"]:checked`);
+                if(selected) {
+                    let val = parseInt(selected.value);
+                    total += val;
+                    qScores[name] = val;
+                } else {
+                    qScores[name] = null;
+                }
+            }
+            return { total, qScores };
+        }
+
+        // 根据总分、特殊维度分数及年龄生成类型、描述和建议
+        function generateResult(total, qScores, childAge, childNick) {
+            // 总分范围8-32
+            let type = "";
+            let mainDescription = "";
+            let extraTips = [];
+            
+            // 特殊维度标记
+            const highSensory = (qScores.q3 >= 3);      // 质地敏感高分
+            const highNewFood = (qScores.q1 >= 3 && qScores.q2 >= 3); // 新食物抗拒明显
+            const highFixed = (qScores.q4 >= 3);        // 固化行为
+            
+            // 年龄文本
+            let ageText = "";
+            if(childAge === 'baby') ageText = "6-12个月宝宝";
+            else if(childAge === 'toddler') ageText = "1-3岁幼儿";
+            else if(childAge === 'preschool') ageText = "4-6岁学龄前";
+            else ageText = "7岁以上儿童";
+            
+            let namePart = (childNick && childNick.trim() !== "") ? `${childNick.trim()}` : "宝贝";
+            
+            // 总分类型划分
+            if(total <= 12) {
+                type = "🥇 均衡美食家 · 小饕客";
+                mainDescription = `${namePart} 对食物接受度很高，几乎没有明显挑食行为！饮食习惯非常棒，继续保持多样化喂养，鼓励探索更多健康食材。`;
+                extraTips = ["✨ 继续保持丰富多样的餐桌，每周引入1~2种新食材；", "🍎 让宝贝参与简单的食物准备，增加成就感；", "🎉 记录“美食小勋章”，持续鼓励不挑食的好习惯。"];
+            } 
+            else if(total >= 13 && total <= 19) {
+                type = "🌻 轻度挑剔型 · 口味探索家";
+                mainDescription = `${namePart} 有一些食物偏好，但整体影响不大，属于成长过程中常见的“轻微挑食期”。适当引导可以拓宽食物接受范围。`;
+                extraTips = ["🥄 运用“食物搭桥”法，将喜欢的和不喜欢的食材少量混合；", "📖 阅读食物绘本，增加对陌生食物的积极联想；", "⏰ 坚持规律就餐，不强迫，营造轻松进餐氛围。"];
+                if(highSensory) extraTips.push("🍲 对质地稍敏感，可尝试改变烹饪方式（如蒸变烤、切碎或泥状过渡）。");
+                if(highNewFood) extraTips.push("🌟 新食物恐惧倾向：采用“无压力接触”，先让食物出现在餐盘但不强迫吃。");
+            } 
+            else if(total >= 20 && total <= 26) {
+                type = "🌱 中度挑食型 · 味蕾小固执";
+                mainDescription = `${namePart} 挑食习惯较明显，可能对多类食物抗拒，进餐时常需要斗智斗勇。但通过耐心策略可以逐步改善，膳食陪伴营会支持您！`;
+                extraTips = ["🧩 建立“食物游戏清单”，将食材做成趣味形状增加互动；", "👩‍🍳 固定就餐座位和时间，减少进餐干扰（电视/玩具）；", "📝 鼓励“勇敢尝试一口”打卡，用小奖励正向强化；"];
+                if(highFixed) extraTips.push("🔄 针对只吃固定几样：每次增加一种类似颜色或口味的新食物，慢慢替换。");
+                if(highSensory) extraTips.push("🍚 若对质地敏感，先从糊状/流食过渡到半固体，耐心适应每一步。");
+            } 
+            else {
+                type = "💪 严重偏食型 · 滋养攻关期";
+                mainDescription = `${namePart} 挑食行为比较严重，已影响营养摄入和家庭进餐氛围。需要系统性的干预方法和专业支持。别焦虑，膳食陪伴营提供系列策略帮助改善。`;
+                extraTips = ["🏥 建议咨询儿科医生或营养师，排除潜在生理因素；", "🍽️ 采用“分餐制”，提供1-2样孩子能接受的食物+1样新食物；", "❤️ 减少零食和餐前饮料，增加饥饿感；渐进式脱敏训练；", "📚 加入“安心滋养膳食陪伴营”社群，获取定制喂养方案和鼓励。"];
+                if(highNewFood && highSensory) extraTips.push("🧸 严重感官敏感+新食物恐惧：从触摸、闻食物开始游戏，不急于进食。");
+            }
+            
+            // 额外根据特殊高维增加专属温馨建议
+            if(total >= 13 && highSensory && total <=26) {
+                extraTips.push("🎯 感官敏感提示：提供食物选择器（叉子、可爱餐具）降低排斥，尝试不同温度的食物。");
+            }
+            if(total >= 20 && highNewFood) {
+                extraTips.push("🌈 对新食物恐惧练习：让宝贝在烹饪前参与洗菜、摆盘，增加控制感和熟悉度。");
+            }
+            if(total <= 26 && (qScores.q5 >= 3 || qScores.q8 >= 3)) {
+                extraTips.push("😌 进餐情绪紧张？减少评价食物“好坏”，先接纳孩子食量，建立安全餐桌规则。");
+            }
+            
+            // 年龄精细化微调建议
+            if(childAge === 'baby') {
+                extraTips.unshift("🍼 针对辅食期宝宝，泥糊状食物逐步增加颗粒，尊重饥饿信号，不强迫喂养。");
+            } else if(childAge === 'preschool') {
+                extraTips.push("👧 学龄前孩子可以一起制定一周食谱，赋予小主人身份，提升进食意愿。");
+            } else if(childAge === 'school') {
+                extraTips.push("📚 学龄儿童可科普食物营养知识，使用成长教育方法鼓励自主选择。");
+            }
+            
+            // 去重简单处理，保证建议独特且不超过6条
+            extraTips = [...new Map(extraTips.map(tip => [tip, tip])).values()].slice(0,6);
+            
+            return { type, mainDescription, tips: extraTips, totalScore: total, ageContext: ageText };
+        }
+        
+        // 展示结果主函数
+        function displayResult() {
+            if(!isAllQuestionsAnswered()) {
+                errorMsgDiv.style.display = "block";
+                // 滚动到错误提示
+                errorMsgDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            errorMsgDiv.style.display = "none";
+            
+            const { total, qScores } = getScores();
+            const childAge = childAgeSelect.value;
+            const childNick = childNameInput.value.trim();
+            const { type, mainDescription, tips, totalScore, ageContext } = generateResult(total, qScores, childAge, childNick);
+            
+            // 填充结果区域
+            document.getElementById('resultTypeLabel').innerHTML = type;
+            const scoreHtml = `总分: ${totalScore}分  (范围8-32分，分数越高挑食倾向越明显)  ·  ${ageContext}`;
+            document.getElementById('resultScore').innerHTML = scoreHtml;
+            document.getElementById('resultDescription').innerHTML = mainDescription;
+            
+            const tipsUl = document.getElementById('resultTips');
+            tipsUl.innerHTML = "";
+            tips.forEach(tip => {
+                const li = document.createElement('li');
+                li.textContent = tip;
+                tipsUl.appendChild(li);
+            });
+            
+            // 展示结果卡片
+            resultDiv.style.display = "block";
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // 重置所有表单选项 + 隐藏结果 + 清空名称（可选不清空昵称，让用户保留但为了体验重置全部radio）
+        function resetAllSelections() {
+            // 重置所有radio组
+            for(let name of questionNames) {
+                let radios = document.querySelectorAll(`input[name="${name}"]`);
+                radios.forEach(radio => radio.checked = false);
+            }
+            // 不重置昵称和年龄，但也可以让重置更彻底——根据产品设计：重置所有回答，但用户信息可保留（方便重填）
+            // 为了完全干净，保留昵称年龄不动，但用户可以手动清空昵称。重置仅清空问卷。
+            // 同时隐藏结果区
+            resultDiv.style.display = "none";
+            errorMsgDiv.style.display = "none";
+            // 可选提示（滚动至顶部）
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // 重新测试按钮（重置+清空结果）
+        function reTest() {
+            resetAllSelections();
+        }
+        
+        // 提交事件
+        submitBtn.addEventListener('click', displayResult);
+        resetBtn.addEventListener('click', resetAllSelections);
+        if(reTestBtn) reTestBtn.addEventListener('click', () => {
+            resetAllSelections();
+        });
+        
+        // 初始隐藏结果区域
+        resultDiv.style.display = "none";
+        errorMsgDiv.style.display = "none";
+        
+        // 自动给每个选项组增加优雅样式 (已处理)
+    })();
+</script>
+</body>
+</html>
